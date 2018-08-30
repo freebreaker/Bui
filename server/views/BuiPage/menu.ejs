@@ -11,7 +11,9 @@
             </li>
         </ul>
         <div class="Bui-Docs">
-                <%= component %>
+                <% if (component) { %>
+                    <%- include(component+'/'+component+'.ejs') %>
+                <% } %>
         </div>
 </div>
 

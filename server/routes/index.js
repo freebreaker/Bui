@@ -1,3 +1,3 @@
 module.exports = function (app) {
-    app.use('/', require('./page1'));
+    app.use('/', require('./page'));
 };

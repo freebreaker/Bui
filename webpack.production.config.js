@@ -4,7 +4,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 var productionConfig = [{
     entry: {
-        page1: './client/page1',
+        page: './client/page',
         BuiPage: './client/BuiPage',
     },
     output: {

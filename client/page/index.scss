@@ -340,3 +340,26 @@
   [hidden] {
     display: none;
   }
+.main{
+    width: 700px;
+    height: 400px;
+    margin: 0 auto;
+    position: absolute;
+    left:50%;
+    top:50%;
+    margin-left:-350px;
+    margin-top:-200px;
+    display: flex;
+    justify-content: space-around;
+    .main-module{
+        width: 300px;
+        height: 322px;
+        border: 1px solid #ebedf2;
+        text-align: center;
+        .main-module-image{
+            width: 100%;
+            height: 180px;
+            background: #ebedf2;
+        }
+    }
+}

@@ -1,21 +1,70 @@
-@import '../common/common';
 
-.Bui-Menu-Tree{
-    display: inline-block;
-    width: 200px;
-    min-height: 900px;
-    padding: 25px;
-    border-right: 1px solid #ebedf2;
-    li{
-        list-style: none;
-        height: 40px;
-        text-align: center;
-        a{
-            color: #000000;
+.Bui-Menu{
+    display: flex;
+    justify-content: space-around;
+    .Bui-Menu-Tree{
+        display: inline-block;
+        margin: 0;
+        width: 15%;
+        box-sizing: border-box;
+        min-height: 900px;
+        padding: 25px;
+        border-right: 1px solid #ebedf2;
+        li{
+            list-style: none;
+            height: 40px;
+            text-align: center;
+            a{
+                color: #000000;
+            }
         }
     }
-}
+    
+    .Bui-Docs{
+        width: 85%;
+        min-height: 900px;
+        .Bui-form{
+            width: 100%;
+            min-height: 900px;
+            display: flex;
+            justify-content: space-around;
+            .Bui-Textarea{
+                width: 49%;
+                position: relative;
+                min-height: 900px;
+                .Html-Textarea{
+                    width: 100%;
+                    min-height: 600px;
+                    outline:none;
+                    resize: none;
+                    font-family: Courier New;
+                    font-size: 14px;
+                }
 
-.Bui-Docs{
-    display: inline-block;
+                .Script-Textarea{
+                    width: 100%;
+                    min-height: 300px;
+                    outline:none;
+                    resize: none;
+                    font-family: Courier New;
+                    font-size: 14px;
+                }
+                .Html-Button{
+                    position: absolute;
+                    top: 15px;
+                    right: 5px;
+                }
+                .Script-Button{
+                    position: absolute;
+                    bottom: 270px;
+                    right: 5px;
+                }
+            }
+            .Bui-Demo{
+                width: 50%;
+                min-height: 900px;
+                background: #dadada;
+            }
+        }
+    }
 }

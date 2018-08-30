@@ -2,7 +2,7 @@ var express = require('express'),
     router = express.Router();
 
 router.get('/', function(req, res) {
-    res.render('page1');
+    res.render('page');
 });
 
 router.get('/ui',function(req,res){

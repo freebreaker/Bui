@@ -1,6 +1,4 @@
 require("./index.scss");
-require("./BuiPage.scss")
-require("../common/common.js");
 
 
 
