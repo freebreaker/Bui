@@ -23,7 +23,7 @@
     .Bui-Docs{
         width: 85%;
         min-height: 900px;
-        .Bui-form{
+        .Bui-Wrap{
             width: 100%;
             min-height: 900px;
             display: flex;
@@ -39,6 +39,7 @@
                     resize: none;
                     font-family: Courier New;
                     font-size: 14px;
+                    border: 1px solid #dadadd;
                 }
 
                 .Script-Textarea{
@@ -48,6 +49,7 @@
                     resize: none;
                     font-family: Courier New;
                     font-size: 14px;
+                    border: 1px solid #dadadd;
                 }
                 .Html-Button{
                     position: absolute;
@@ -63,8 +65,9 @@
             .Bui-Demo{
                 width: 50%;
                 min-height: 900px;
-                background: #dadada;
+                border: 1px solid #dadadd;
             }
         }
     }
 }
+

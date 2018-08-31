@@ -1,12 +1,34 @@
-<div class="Bui-form">
+<div class="Bui-Wrap">
     <div class="Bui-Textarea">
         <textarea class='Html-Textarea' rows="3" cols="20">
-            <div>
-                <input type='text'></input>
-            </div>
+            <form class="Bui-form" action="http://localhost:3002/comments" method="get" data-success-callback="window.location.reload()">
+                <div class='Bui-form-item'>
+                    <label class='Bui-form-label' for="">手机号:</label>
+                    <input type="text" name="fname" data-rule="phone" data-required ="required"/>
+                </div>
+                <div class='Bui-form-item'>
+                    <label class='Bui-form-label' for="">邮箱:</label>
+                    <input type="text" name="lname"  data-rule="email"/>
+                </div>
+                <div class='Bui-form-item'>
+                    <label class='Bui-form-label' for="">选择框:</label>
+                    <div class="Bui-input-inline">
+                        <select name="quiz" lay-verify="required" lay-vertype="tips" style="width: 100%;">
+                            <option value="">请选择问题</option>
+                            <option value="0">你工作的第一个城市</option>
+                            <option value="1" disabled="">你的工号</option>
+                            <option value="2">你最喜欢的老师</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="Bui-form-item Bui-form-submit">
+                    <button type="submit" class="btn btn-primary" style="width: 180px;display: none;">提交</button>
+                </div>
+                </form>
         </textarea>
         <textarea class='Script-Textarea' rows="3" cols="20">
-        bui.use('form',function(){})
+            bui.use('form',function(){})
         </textarea>
         <button class='Html-Button'>
             点击运行

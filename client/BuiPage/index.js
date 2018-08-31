@@ -1,10 +1,14 @@
 require("./index.scss");
 
+require("./modules/form.scss")
+
+
 ;!function(window){
     "use strict";
 
     var config = {
-        modules:{}  //各个模块的物理路径
+        modules:{  //各个模块的物理路径
+        }
     }
 
     var getIndexPath = function(){
@@ -72,7 +76,7 @@ require("./index.scss");
 
             node.src = url
 
-            // head.appendChild(node)
+            head.appendChild(node)
 
         }
 
@@ -100,8 +104,9 @@ require("./index.scss");
 
     Bui.prototype.modules = function(){
         return {
-            form: 'modules/form' //表单
-          };
+            form: 'modules/form', //表单
+            jquery:'modules/jquery'
+        };
     }()
 
     window.bui = bui
