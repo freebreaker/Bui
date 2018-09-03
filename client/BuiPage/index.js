@@ -8,7 +8,8 @@ require("./modules/form.scss")
 
     var config = {
         modules:{  //各个模块的物理路径
-        }
+        },
+        status:{}
     }
 
     var getIndexPath = function(){
@@ -42,9 +43,9 @@ require("./modules/form.scss")
         var that = this
  
         var callback = function(){
-
           typeof producer === 'function' && producer(function(app, exports){
             bui[app] = exports
+            config.status[app] = true;
           });
           return this;
         };
@@ -60,15 +61,31 @@ require("./modules/form.scss")
 
         var that =this,head = document.getElementsByTagName('head')[0],
 
-        dirPath = config.dir = config.dir?config.dir:getIndexPath
+        dirPath = config.dir = config.dir?config.dir:getIndexPath,
 
-        var item = name[0],exports = exports||[]
+        names = typeof name === 'string' ? [name] : name;
+
+        var item = names[0],exports = exports||[]
+
+        function scriptCallback(){
+            exports.push(bui[item])
+            names.length > 1 ?
+            that.use(names.slice(1), callback, exports)
+          : ( typeof callback === 'function' && callback.apply(bui, exports) );
+        }
+
+        function scriptLoad(e,path){
+            if(e.type === 'load'){
+                head.removeChild(node) //移除module
+                scriptCallback()
+            }
+        }
         
-        if(!config.modules[name]){
+        if(!config.modules[item]){
 
             var node = document.createElement('script'),
             
-            url = dirPath + (that.modules[name]||name) + '.js'
+            url = dirPath + (that.modules[item]||item) + '.js'
 
             node.async = true
 
@@ -78,9 +95,17 @@ require("./modules/form.scss")
 
             head.appendChild(node)
 
-        }
+            node.addEventListener('load',function(e){
+                scriptLoad(e,url)
+            },false)
 
-        callback.apply(that,exports)
+            config.modules[item] = url
+
+        }else{
+
+            //如果不是首次加载
+            scriptCallback()
+        }
         
         return that
     }
@@ -116,7 +141,19 @@ require("./modules/form.scss")
 
 $(function(){
 
-    var head = document.getElementsByTagName('head')[0];
+    var body = document.getElementsByTagName('body')[0];
+
+    var scriptText = $('.Bui-Textarea .Script-Textarea').val()
+
+    var createScript = document.createElement('script')
+
+    createScript.async = true
+
+    createScript.charset = 'utf-8'
+    
+    createScript.appendChild(document.createTextNode(scriptText))
+
+    body.appendChild(createScript) 
 
     $('.Bui-Textarea .Html-Button').on('click',function(){
         var node = $('.Bui-Textarea .Html-Textarea').val()
@@ -124,21 +161,16 @@ $(function(){
     })
 
     $('.Bui-Textarea .Script-Button').on('click',function(){
-        var scriptText = $('.Bui-Textarea .Script-Textarea').val()
-        var createScript = document.createElement('script')
 
-        createScript.async = true
+        var newScriptText = $('.Bui-Textarea .Script-Textarea').val()
 
-        createScript.charset = 'utf-8'
+        eval(newScriptText)
 
-        createScript.appendChild(document.createTextNode(scriptText))
-
-        head.appendChild(createScript)
     })    
 
     $('.Bui-Textarea .Html-Button').click()
 
-    $('.Bui-Textarea .Script-Button').click()
+    // $('.Bui-Textarea .Script-Button').click()
 
 })
 

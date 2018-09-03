@@ -23,12 +23,15 @@
 
                 </div>
                 <div class="Bui-form-item Bui-form-submit">
-                    <button type="submit" class="btn btn-primary" style="width: 180px;display: none;">提交</button>
+                    <button type="submit" class="btn btn-primary" style="">提交</button>
                 </div>
                 </form>
         </textarea>
         <textarea class='Script-Textarea' rows="3" cols="20">
-            bui.use('form',function(){})
+            bui.use('form',function(){
+                var form = bui.form
+                console.log(3)
+            })
         </textarea>
         <button class='Html-Button'>
             点击运行
