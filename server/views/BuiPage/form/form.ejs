@@ -4,16 +4,16 @@
             <form class="Bui-form" action="http://localhost:3002/comments" method="get" data-success-callback="window.location.reload()">
                 <div class='Bui-form-item'>
                     <label class='Bui-form-label' for="">手机号:</label>
-                    <input type="text" name="fname" data-rule="phone" data-required ="required"/>
+                    <input type="text" name="phone" bui-verify="required|phone"/>
                 </div>
                 <div class='Bui-form-item'>
                     <label class='Bui-form-label' for="">邮箱:</label>
-                    <input type="text" name="lname"  data-rule="email"/>
+                    <input type="text" name="email" bui-verify="email"/>
                 </div>
                 <div class='Bui-form-item'>
                     <label class='Bui-form-label' for="">选择框:</label>
                     <div class="Bui-input-inline">
-                        <select name="quiz" lay-verify="required" lay-vertype="tips" style="width: 100%;">
+                        <select name="question" bui-verify="required" style="width: 100%;">
                             <option value="">请选择问题</option>
                             <option value="0">你工作的第一个城市</option>
                             <option value="1" disabled="">你的工号</option>
@@ -23,7 +23,7 @@
 
                 </div>
                 <div class="Bui-form-item Bui-form-submit">
-                    <button type="submit" class="btn btn-primary" style="">提交</button>
+                    <button class="bui-submit" bui-submit>提交</button>
                 </div>
                 </form>
         </textarea>
@@ -31,6 +31,13 @@
             bui.use('form',function(){
                 var form = bui.form
                 console.log(3)
+                form.on('select',function(data){
+                    console.log(data)
+                })
+
+                form.on('submit',function(data){
+                    console.log(data)
+                })
             })
         </textarea>
         <button class='Html-Button'>

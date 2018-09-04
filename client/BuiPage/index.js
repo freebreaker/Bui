@@ -9,7 +9,8 @@ require("./modules/form.scss")
     var config = {
         modules:{  //各个模块的物理路径
         },
-        status:{}
+        status:{},
+        events:{}
     }
 
     var getIndexPath = function(){
@@ -50,11 +51,11 @@ require("./modules/form.scss")
           return this;
         };
         
-        // callback.call(that);
+        callback.call(that);
 
-        that.use(name, callback);
+        // that.use(name, callback);
 
-        return that;
+        // return that;
     }
 
     Bui.prototype.use = function(name,callback,exports){
@@ -134,7 +135,44 @@ require("./modules/form.scss")
         };
     }()
 
+    Bui.prototype.onevent = function(moduleName,events,callback){
+        if(typeof moduleName!=='string'||typeof callback!=='function'){
+            return this
+        }
+        return bui.event(moduleName,events,null,callback)
+    }
+
+    Bui.prototype.event = function(moduleName,events,params,callback){
+
+        //callback 是select on的回调函数
+
+        var that = this,result = null
+
+        var fn = function(_,item){
+            var res = item && item.call(that, params);
+            res === false && result === null && (result = false);
+        }
+
+        var eventName = moduleName + '.' + events
+
+        if(callback){
+            //如果回调存在，将之加入到config.event
+            config.events[eventName] = config.events[eventName] || []
+
+            config.events[eventName].push(callback)
+
+            return this
+
+        }
+
+        bui.each(config.events[eventName],fn)
+
+        return result
+
+    }
+
     window.bui = bui
+    
 }(window);
 
 
@@ -169,8 +207,6 @@ $(function(){
     })    
 
     $('.Bui-Textarea .Html-Button').click()
-
-    // $('.Bui-Textarea .Script-Button').click()
 
 })
 

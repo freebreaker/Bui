@@ -35,6 +35,8 @@ bui.define('jquery', function(exports){
             }
           };
         };
+
+    var Form = new form()
     
     form.prototype.set = function(options){
         var that = this
@@ -66,7 +68,8 @@ bui.define('jquery', function(exports){
                     // alert('hide select')
                 }
                 var allEvents = function(replaceElem){
-                    var select = $(this),selectedIndex = this.selectedIndex,
+                    var select = $(this), //触发event的元素
+                        selectedIndex = this.selectedIndex,
                         itemDl = replaceElem.find('dl'),itemDds=itemDl.children('dd'),
                         selectTitle = replaceElem.find('.'+Title),
                         selectInput = replaceElem.find('input')
@@ -109,6 +112,14 @@ bui.define('jquery', function(exports){
                             selectInput.val($(this).text())
                             $(this).addClass('Bui-choosen')
                         }
+
+                        select.val(value)      //将选中的value 赋给 select的value
+
+                        bui.event.call(this,Module_Name,'select',{
+                            element:select[0],
+                            value:value,
+                            replaceElem:replaceElem
+                        })
 
                         ddHide(true)
 
@@ -177,16 +188,78 @@ bui.define('jquery', function(exports){
         return that;
     }
 
-    var submit = function(e){
-        e.preventDefault()
-        alert('提交')
+    //表单事件的监听事件
+    form.prototype.on = function(events,callback){
+
+        return bui.onevent.call(this,Module_Name,events,callback)
+
     }
 
-    var Form = new form()
+    var submit = function(e){
+
+        e.preventDefault()
+        
+        var btn = $(this),
+            verifyElem = btn.parents(Elem).find('*[bui-verify]') //获取需要验证的元素
+            formElem = btn.parents('form')[0]                   //获取当前的form
+            formField = $(Elem).find('input,select,textarea'),  //获取所有的表单域
+            field = {} //表单域所有元素的key value
+            verifyConfig = Form.config.verify
+
+        //遍历 开始校验
+        bui.each(verifyElem,function(_,item){
+
+            var verifyItems = $(this).attr('bui-verify').split('|')  // "required|number|phone"
+
+            var val = $(this).val()
+
+            //提示方式暂不写
+
+            bui.each(verifyItems,function(_,verifyItem){  //验证的是verifyElem
+
+                var isVerified  //是否命中校验
+
+                var isFunction = typeof verifyConfig[verifyItem] === 'function',errorText = ''
+                
+                if(verifyConfig[verifyItem]){  //如果config有验证规则
+                    
+                    isVerified = isFunction?errorText = verifyConfig[verifyItem](val,fn):!verifyConfig[verifyItem][0].test(val)  //value 是否校验成功
+
+                    errorText = errorText || verifyConfig[verifyItem][1]
+
+                    if(isVerified){
+                        //如果命中校验，即触发errorText,给出提示
+                        alert(errorText)
+                    }
+
+                }
+
+            })
+
+        })
+
+        bui.each(formField,function(_,item){
+
+            item.name = (item.name || '').replace(/^\s*|\s*&/, '')
+
+            if(!item.name) return
+
+            field[item.name] = item.value
+
+        })
+
+        return bui.event.call(this,Module_Name,'submit',{
+            element:this,
+            form:formElem,
+            field:field
+        })
+
+
+    }
 
     Form.render()
 
-    $(document).on('submit',Elem,submit)
+    $(document).on('submit',Elem,submit).on('click', '*[bui-submit]', submit);
     //……
     exports(Module_Name,Form);
 }); 
