@@ -1,5 +1,5 @@
 require("./index.scss");
-
+require("./common.scss")
 
 
 

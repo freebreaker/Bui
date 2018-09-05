@@ -94,7 +94,8 @@ bui.define('jquery', function(exports){
                         selectInput.blur()
                     }
 
-                    $('.'+ Title).on('click',function(e){
+                    selectTitle.on('click',function(e){
+                        console.log(this)
                         if(replaceElem.hasClass(Class+'ed')){
                             ddHide()
                         }else{
@@ -172,6 +173,31 @@ bui.define('jquery', function(exports){
                 
             },
             radio:function(){
+
+                var Radio_Class = 'Bui-form-radio',radios = $(Elem).find('input[type=radio]'),
+
+                radioEvents = function(reElem){
+
+                    console.log('radio events')
+
+                }
+
+                radios.each(function(index,item){
+
+                    var _this = $(this),radio_value = item.value,
+                        disabled = this.disabled
+
+                    var reElem = $(['<div class="bui-unselect '+ Radio_Class,
+                        ,(disabled ? ' bui-radio-disbaled '+DISABLED : '') +'">' //禁用状态
+                        ,'<i class="iconfont bui-radio-animate bui-radio-icon">'+ '&#xe764;' +'</i>'
+                        ,'</div>'].join(''));
+
+                    _this.after(reElem)
+
+                    radioEvents.call(this,reElem)
+
+                })
+
             },
             checkbox:function(){
             }

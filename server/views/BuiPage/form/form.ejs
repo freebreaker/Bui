@@ -22,6 +22,24 @@
                     </div>
 
                 </div>
+                <div class='Bui-form-item'>
+                    <label class='Bui-form-label' for="">选择框:</label>
+                    <div class="Bui-input-inline">
+                        <select name="question2" bui-verify="required" style="width: 100%;">
+                            <option value="">请选择问题</option>
+                            <option value="0" disabled>你工作的第一个城市</option>
+                            <option value="1">你的工号</option>
+                            <option value="2">你最喜欢的老师</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='Bui-form-item'>
+                    <label class='Bui-form-label' for="">单选框:</label>
+                    <div class="Bui-input-inline">
+                        <input type='radio' value ='男' name ='sex'/>
+                        <input type='radio' value ='女' name='sex'/>
+                    </div>
+                </div>
                 <div class="Bui-form-item Bui-form-submit">
                     <button class="bui-submit" bui-submit>提交</button>
                 </div>
@@ -30,7 +48,7 @@
         <textarea class='Script-Textarea' rows="3" cols="20">
             bui.use('form',function(){
                 var form = bui.form
-                console.log(3)
+
                 form.on('select',function(data){
                     console.log(data)
                 })

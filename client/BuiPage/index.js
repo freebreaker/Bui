@@ -1,6 +1,10 @@
+require('../page/index')
+
 require("./index.scss");
 
 require("./modules/form.scss")
+
+
 
 
 ;!function(window){
