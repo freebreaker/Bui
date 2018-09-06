@@ -95,7 +95,7 @@ bui.define('jquery', function(exports){
                     }
 
                     selectTitle.on('click',function(e){
-                        console.log(this)
+                        
                         if(replaceElem.hasClass(Class+'ed')){
                             ddHide()
                         }else{
@@ -176,9 +176,45 @@ bui.define('jquery', function(exports){
 
                 var Radio_Class = 'Bui-form-radio',radios = $(Elem).find('input[type=radio]'),
 
+                    Animate_Scale = 'Bui-animate-scale',Icon=['&#xe764;','&#xe6d4;']
+
                 radioEvents = function(reElem){
 
-                    console.log('radio events')
+                    var radio = $(this)
+
+                    reElem.on('click',function(){
+
+                        var name = radio[0].name,
+
+                            sameNameRadio = radio.parents(Elem).find('input[name='+ name.replace(/(\.|#|\[|\])/g, '\\$1') +']');
+                        
+                        if(radio.disabled) return
+
+                        bui.each(sameNameRadio,function(index,item){
+                            
+                            var next = $(this).next('.'+ Radio_Class)
+
+                            this.checked = false
+
+                            next.removeClass(Radio_Class+'ed')
+
+                            next.find('.Bui-radio-icon').removeClass(Animate_Scale).html(Icon[0])
+
+                        })
+
+                        radio[0].checked = true
+
+                        reElem.addClass(Radio_Class+'ed')
+
+                        reElem.find('.Bui-radio-icon').addClass(Animate_Scale).html(Icon[1])
+
+                        bui.event.call(radio[0],Module_Name,'radio',{
+                            element:radio[0],
+                            value:radio[0].value,
+                            replaceElem:reElem
+                        })
+
+                    })
 
                 }
 
@@ -187,9 +223,11 @@ bui.define('jquery', function(exports){
                     var _this = $(this),radio_value = item.value,
                         disabled = this.disabled
 
-                    var reElem = $(['<div class="bui-unselect '+ Radio_Class,
-                        ,(disabled ? ' bui-radio-disbaled '+DISABLED : '') +'">' //禁用状态
-                        ,'<i class="iconfont bui-radio-animate bui-radio-icon">'+ '&#xe764;' +'</i>'
+                    var reElem = $(['<div class="Bui-unselect '+ Radio_Class,
+                        (item.checked?(''+ Radio_Class+'ed'):"")                //是否选中
+                        ,(disabled ? ' Bui-radio-disbaled '+DISABLED : '') +'">' //禁用状态
+                        ,'<i class="iconfont Bui-animate Bui-radio-icon">'+ Icon[item.checked? 1 : 0] +'</i>'
+                        ,'<span>'+radio_value+'</span>'
                         ,'</div>'].join(''));
 
                     _this.after(reElem)
@@ -269,6 +307,8 @@ bui.define('jquery', function(exports){
             item.name = (item.name || '').replace(/^\s*|\s*&/, '')
 
             if(!item.name) return
+
+            if(/^checkbox|radio$/.test(item.type)&&!item.checked) return
 
             field[item.name] = item.value
 
