@@ -4,9 +4,6 @@ require("./index.scss");
 
 require("./modules/form.scss")
 
-
-
-
 ;!function(window){
     "use strict";
 
@@ -135,7 +132,8 @@ require("./modules/form.scss")
     Bui.prototype.modules = function(){
         return {
             form: 'modules/form', //表单
-            jquery:'modules/jquery'
+            jquery:'modules/jquery',
+            button:'modules/button'
         };
     }()
 
@@ -200,6 +198,7 @@ $(function(){
     $('.Bui-Textarea .Html-Button').on('click',function(){
         var node = $('.Bui-Textarea .Html-Textarea').val()
         $('.Bui-Demo').html(node)
+
     })
 
     $('.Bui-Textarea .Script-Button').on('click',function(){
